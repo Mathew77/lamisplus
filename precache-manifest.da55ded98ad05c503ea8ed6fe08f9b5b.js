@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "https://Mathew77.github.io/lamisplus/static/js/0.e9780234.chunk.js"
   },
   {
-    "revision": "295632a6add6bdaa21d5",
+    "revision": "9a2550015e1db13e1806",
     "url": "https://Mathew77.github.io/lamisplus/static/css/main.6d2de7b9.chunk.css"
   },
   {
-    "revision": "295632a6add6bdaa21d5",
-    "url": "https://Mathew77.github.io/lamisplus/static/js/main.e25b9629.chunk.js"
+    "revision": "9a2550015e1db13e1806",
+    "url": "https://Mathew77.github.io/lamisplus/static/js/main.cfe0fbb5.chunk.js"
   },
   {
     "revision": "3e9cea14d62e6963ac5f",
@@ -52,8 +52,8 @@ self.__precacheManifest = [
     "url": "https://Mathew77.github.io/lamisplus/static/media/100_4.945f33b6.png"
   },
   {
-    "revision": "b175e1c4790112fe609a0f3279e8535d",
-    "url": "https://Mathew77.github.io/lamisplus/static/media/logo_200.b175e1c4.png"
+    "revision": "d54d06559bf680cac7dc15ba939d5510",
+    "url": "https://Mathew77.github.io/lamisplus/static/media/logo_200.d54d0655.png"
   },
   {
     "revision": "80d4a4e5af9b6cf3882e4a34c5497542",
@@ -64,7 +64,7 @@ self.__precacheManifest = [
     "url": "https://Mathew77.github.io/lamisplus/static/media/background_1920-2.c54eef50.jpg"
   },
   {
-    "revision": "e64984d541fe211d5ff379775c8d60d3",
+    "revision": "8431cf1d293ea298b03a86068a51286b",
     "url": "https://Mathew77.github.io/lamisplus/index.html"
   }
 ];
