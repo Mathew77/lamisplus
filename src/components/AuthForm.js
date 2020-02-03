@@ -28,8 +28,7 @@ class AuthForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('The link was clicked.');
-    this.props.history.push('/Bldg');
+    this.props.history.push('/dashboard');
     
   };
 
@@ -61,7 +60,7 @@ class AuthForm extends React.Component {
     } = this.props;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} >
         {showLogo && (
           <div className="text-center pb-4">
             <img
@@ -96,7 +95,8 @@ class AuthForm extends React.Component {
         <hr />
         <Button
           size="lg"
-          className="bg-gradient-theme-left border-0"
+          color="primary"
+          className="bg-primary border-0"
           block
           onClick={this.handleSubmit}>
           {this.renderButtonText()}

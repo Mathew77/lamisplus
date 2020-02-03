@@ -25,6 +25,14 @@ class App extends React.Component {
       <BrowserRouter basename={getBasename()}>
         <GAListener>
           <Switch>
+          <LayoutRoute
+              exact
+              path="/"
+              layout={EmptyLayout}
+              component={props => (
+                <AuthPage {...props} authState={STATE_LOGIN} />
+              )}
+            />
             <LayoutRoute
               exact
               path="/login"
@@ -44,9 +52,9 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />
-               
+                
                  {/* The new routes are here  */}
+                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/patient-regsitration" component={PateintRegistationPage} />
                 <Route exact path="/checkin" component={CheckInPage} />
                 <Route exact path="/vitalsigns" component={VitalSignsPage} />

@@ -26,7 +26,7 @@ const sidebarBackground = {
 
 
 const navItems = [
-  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
+  { to: '/dashboard', name: 'dashboard', exact: true, Icon: MdDashboard },
   { to: '/patient-regsitration', name: 'register patient', exact: false, Icon: FaUserPlus },
   { to: '/checkin', name: 'check in', exact: false, Icon: MdAirlineSeatFlat },
   { to: '/vitalsigns', name: 'vital signs', exact: false, Icon: FaXRay },

@@ -22,9 +22,10 @@ class AuthPage extends React.Component {
           height: '100vh',
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor : '#F4F7FC',
         }}>
         <Col md={6} lg={4}>
-          <Card body>
+          <Card body style={{ borderColor:'#fff'}}>
             <AuthForm
               authState={this.props.authState}
               onChangeAuthState={this.handleAuthState}
