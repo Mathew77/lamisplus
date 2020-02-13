@@ -1,10 +1,8 @@
-
 import Page from 'components/Page';
 import UserProgressTable from 'components/UserProgressTable';
 
 import { FaUserPlus, FaCalendarAlt, FaUserCheck} from 'react-icons/fa'; 
 import { MdAirlineSeatIndividualSuite} from 'react-icons/md';
-
 import {
   genLineData,
   // chartjs,

@@ -2,21 +2,29 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
-// import { FaGithub } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import {
   MdDashboard,
+  MdExtension,
+  MdKeyboardArrowDown,
+  MdPages,
   MdAirlineSeatFlat,
 } from 'react-icons/md';
-import { FaUserPlus, FaVials, FaXRay, FaUserMd,FaCalendarAlt, } from 'react-icons/fa';
+import { GiTreeBeehive} from 'react-icons/gi';
+import { FaUserPlus, FaVials, FaXRay, FaUserMd, FaUsers} from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
+  Collapse,
   Nav,
   Navbar,
   NavItem,
   NavLink as BSNavLink,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+
 
 const sidebarBackground = {
   backgroundImage: `url("${sidebarBgImage}")`,
@@ -24,26 +32,65 @@ const sidebarBackground = {
   backgroundRepeat: 'no-repeat',
 };
 
+const navComponents = [
+  { to: '/test-order', name: 'Test Order', exact: false, Icon: FaVials },
+  {
+    to: '/collected-sample',
+    name: 'Collected Sample',
+    exact: false,
+    Icon: FaVials,
+  },
+  {
+    to: '/test-result',
+    name: 'Test Result',
+    exact: false,
+    Icon: FaVials,
+  },
+];
+
+
+
+const pageContents = [
+  { to: '/pending-prescription', name: 'Pending Prescription', exact: false, Icon: FaUserPlus },
+  {
+    to: '/dispensed-prescription',
+    name: 'Dispensed Precription',
+    exact: false,
+    Icon: FaUserPlus,
+  },
+];
+
+const PagesHiv = [
+  { to: '/hiv-registration', name: 'Enrollment', exact: false, Icon: GiTreeBeehive },
+  {
+    to: '/hiv-clinic',
+    name: 'Clinic',
+    exact: false,
+    Icon: FaUserPlus,
+  },
+  { to: '/hts', name: 'HTS', exact: false, Icon: GiTreeBeehive },
+  { to: '/case-management', name: 'Case Management', exact: false, Icon: GiTreeBeehive },
+  { to: '/pmtct', name: 'PMTCT', exact: false, Icon: GiTreeBeehive },
+  { to: '/index-tracking', name: 'Index Contract Tracking', exact: false, Icon: GiTreeBeehive },
+  { to: '/client-status', name: 'Client Status Update', exact: false, Icon: GiTreeBeehive },
+];
 
 const navItems = [
-  { to: '/dashboard', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/patient-regsitration', name: 'register patient', exact: false, Icon: FaUserPlus },
-  { to: '/checkin', name: 'check in', exact: false, Icon: MdAirlineSeatFlat },
-  { to: '/vitalsigns', name: 'vital signs', exact: false, Icon: FaXRay },
-  { to: '/consultation', name: 'consultation', exact: false, Icon: FaUserMd },
-  { to: '/laboratory', name: 'laboratory', exact: false, Icon: FaVials },
-  { to: '/pharmacy', name: 'pharmacy', exact: false, Icon: FaUserPlus },
-  { to: '/appointment', name: 'appointment', exact: false, Icon: FaCalendarAlt },
-
+  { to: '/dashboard', name: 'Dashboard', exact: true, Icon: MdDashboard },
+  { to: '/patients', name: 'Patient', exact: false, Icon: FaUsers },
+  { to: '/vital-signs', name: 'Vital Signs', exact: false, Icon: MdAirlineSeatFlat },
+  { to: '/checkin', name: 'Check IN', exact: false, Icon: FaXRay },
+  { to: '/consultation', name: 'Consultation', exact: false, Icon: FaUserMd },
 ];
 
 const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
-    isOpenComponents: true,
-    isOpenContents: true,
-    isOpenPages: true,
+    isOpenComponents: false,
+    isOpenContents: false,
+    isOpenPages: false,
+    isOpenPagesHiv: false,
   };
 
   handleClick = name => () => {
@@ -58,7 +105,7 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <aside className={bem.b()} data-image={sidebarBgImage} >
+      <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')}>
           <Navbar>
@@ -71,7 +118,7 @@ class Sidebar extends React.Component {
                 alt=""
               />
               <span className="text-white">
-                LAMISPLUS 
+                Reduction <FaGithub />
               </span>
             </SourceLink>
           </Navbar>
@@ -80,7 +127,6 @@ class Sidebar extends React.Component {
               <NavItem key={index} className={bem.e('nav-item')}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
-                  style={{ textTransform: 'capitalize'}} 
                   tag={NavLink}
                   to={to}
                   activeClassName="active"
@@ -90,8 +136,131 @@ class Sidebar extends React.Component {
                   <span className="">{name}</span>
                 </BSNavLink>
               </NavItem>
-            ))}         
-        
+            ))}
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <span className=" align-self-start">Laboratory</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenComponents}>
+              {navComponents.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+           
+
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Pages')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdPages className={bem.e('nav-item-icon')} />
+                  <span className="">Pharmacy</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenPages
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenPages}>
+              {pageContents.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>           
+            <Divider variant="middle" style={{backgroundColor: '#fff'}}/>
+              <Typography gutterBottom variant="body1" style={{marginLeft:30, padding: 5, }}>
+                Services
+              </Typography>
+            <Divider variant="middle" style={{backgroundColor: '#fff'}}/>
+      
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('PagesHiv')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdPages className={bem.e('nav-item-icon')} />
+                  <span className="">HIV</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenPagesHiv
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenPagesHiv}>
+              {PagesHiv.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
           </Nav>
         </div>
       </aside>

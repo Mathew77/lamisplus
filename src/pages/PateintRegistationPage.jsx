@@ -1,272 +1,517 @@
-import Page from 'components/Page';
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import { 
+    Card,
+    CardContent,   
+}
+from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Title from 'components/Title/CardTitle';
+import {   Alert } from 'reactstrap';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import DateFnsUtils from '@date-io/date-fns';
 import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Form,
-  FormFeedback,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Alert,
-} from 'reactstrap';
-import Typography from 'components/Typography';
-import {
-    FaPlusSquare
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import Page from 'components/Page';
 
-  } from 'react-icons/fa';
 
-const FormPage = () => {
+const useStyles = makeStyles(theme => ({
+  card: {
+    margin: theme.spacing(20),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center', 
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  }, 
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  cardBottom: {
+    marginBottom: 20
+  },
+  Select: {
+    height:45,
+    width: 300,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  
+  
+}));
+
+
+export default function SignUp() {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    age: '',
+    name: 'hai',
+  });
+    // The first commit of Material-UI
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const handleDateChange = date => {
+        setSelectedDate(date);
+    };
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const handleChange = name => event => {
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
+
   return (
     <Page title="Patient Regsitration" >
-        
-        <Typography type="h6">Patient Regsitration</Typography>
+
         <Alert color="primary">
         All Information with Asterisks(*) are compulsory 
-      </Alert>
-    <Form>
-         {/* First  row form entry  for Demographics*/}
-        <Row>
-        <Col xl={12} lg={12} md={12}>
-            <Card>
-                <CardHeader className="text-info">Demographics</CardHeader>
-                <CardBody>
-                
-                        <Row form>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="firstName">Fist Name</Label>
-                                <Input type="text" name="firstName" id="firstName" placeholder="First Name" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="middleName">Middle Name</Label>
-                                <Input type="text" name="middleName" id="middleName" placeholder="Middle Name" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="lastName">Last Name </Label>
-                                <Input type="text" name="lastName" id="lastName" placeholder="Last Name" />
-                            </FormGroup>
-                            </Col>
-                        </Row>
+        </Alert>
+   
+       <form className={classes.form} Validate>
+
+       <Card className={classes.cardBottom}>  
+            <CardContent>
+                <Title >Basic Information</Title>   
+               
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            autoFocus
+                            size="small"
+                            helperText="First Name"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="mname"
+                            name="middleName"
+                            variant="outlined"
+                            fullWidth
+                            id="middleName"
+                            label="Middle Name"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="lname"
+                            name="lasttName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            size="small"
+                        />
+                        </Grid>
+
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                                    Occupation
+                                </InputLabel>
+                                <Select
+                                native
+                                value={state.age}
+                                onChange={handleChange('age')}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'occupation',
+                                }}
+                                className={classes.Select}
+                                >
+                                <option value="" />
+                                <option value={10}>Ten</option>
+                                <option value={20}>Twenty</option>
+                                <option value={30}>Thirty</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                                Hightest Qualification
+                                </InputLabel>
+                                <Select
+                                native
+                                value={state.age}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'qualification',                                 
+                                }}
+                                className={classes.Select}
+                                >
+                                <option value="" />
+                                <option value={10}>PHD</option>
+                                <option value={20}>MSC</option>
+                                <option value={30}>BSC</option>
+                                <option value={30}>OTHERS</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                                Marital Status
+                                </InputLabel>
+                                <Select
+                                native
+                                value={state.age}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'maritalStatus',
+                                  
+                                }}
+                                className={classes.Select}
+                                >
+                                <option value="" />
+                                <option value={10}>Signled</option>
+                                <option value={20}>Married</option>
+                                <option value={30}>Divoice</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        {/* For Date of Birth */}
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid item xs={12} sm={4}>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                label="Please Date of Birth"
+                                format="MM/dd/yyyy"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                style={{marginTop: -5 }}
+                                />      
+                        </Grid>
+                        </MuiPickersUtilsProvider>
+                        <Grid item xs={12} sm={4}>                       
+                        <FormControlLabel                            
+                            control={
+                            <Checkbox
+                                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                value="checkedI"                               
+                            />
+                            }
+                            label="Custom size"
+                        />
                         
-                        <Row form>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="occupation">Ocuupation</Label>
-                                <Input type="select" name="occupation">
-                                    <option>Students</option>
-                                    <option>Business</option>
-                                    <option>Government</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="qualification">Hightest Qualification</Label>
-                                <Input type="select" name="qualification">
-                                    <option>PHD</option>
-                                    <option>MSC</option>
-                                    <option>BSC</option>
-                                    <option>HND</option>
-                                    <option>NCE</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="maritalStatus">Marital Status</Label>
-                                <Input type="select" name="maritalStatus">
-                                    <option>Signle</option>
-                                    <option>Married</option>
-                                    <option>Divorce</option>
-                                </Input>
-                            </FormGroup>  
-                            </Col>
-                        </Row>
-                        <Row form>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="DateOfBirth">Date of Birth</Label>
-                                <Input type="text" name="DateOfBirth" id="lastName" placeholder="Date of Birth" />
-                            </FormGroup>
-                            </Col>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={4} sm={4}> <TextField id="outlined-basic" label="Years" variant="outlined" size="small"/></Grid>
+                                <Grid item xs={4} sm={4}> <TextField id="outlined-basic" label="Months" variant="outlined" size="small"/></Grid>
+                                <Grid item xs={4} sm={4}> <TextField id="outlined-basic" label="Days" variant="outlined" size="small"/></Grid>
+                            </Grid>
+                            
+                       
+                        </Grid>
+                        {/* End of Date of Birth */}
                     
-                        </Row>
-                        
-                </CardBody>
-            </Card>
-            </Col>
-        </Row>
-        {/* Second row form entry  for contact details*/}
-        <Row>
-        <Col xl={12} lg={12} md={12}>
-            <Card>
-                <CardHeader className="text-info">Contact Details</CardHeader>
-                <CardBody>
+                </Grid>
                 
-                        <Row form>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="phoneNumber">Phone Number</Label>
-                                <Input type="text" name="phoneNumber" id="phoneNumber" placeholder="Phone Number" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="altPhoneNumber">Alt. Phone Number</Label>
-                                <Input type="text" name="altPhoneNumber" id="altPhoneNumber" placeholder="Alternative Number" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="emailAddress">Email Address</Label>
-                                <Input type="email" name="emailAddress" id="emailAddress" placeholder="Email Address" />
-                            </FormGroup>
-                            </Col>
-                        </Row>
+               
+            </CardContent>
 
-
-                </CardBody>
-            </Card>
-            </Col>
-        </Row>
-
-    {/* Third  row form entry  for Contact Address*/}
-    <Row>
-        <Col xl={12} lg={12} md={12}>
-            <Card>
-                <CardHeader className="text-info">Address</CardHeader>
-                <CardBody>
+       </Card>
+       <Card className={classes.cardBottom}>  
+            <CardContent>
+                <Title >Contact Detail</Title>   
                 
-                        <Row form>
-                            <Col md={3}>
-                            <FormGroup>
-                                <Label for="stressAddress">Street Address</Label>
-                                <Input type="text" name="stressAddress" id="stressAddress" placeholder="Stress Address" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                            <FormGroup>
-                                <Label for="city">City</Label>
-                                <Input type="text" name="city" id="city" placeholder="City" />
-                            </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                            <FormGroup>
-                                <Label for="country">Country</Label>
-                                <Input type="select" name="maritalStatus">
-                                    <option>Africa</option>
-                                    <option>Asia</option>
-                                    <option>America</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                            <FormGroup>
-                                <Label for="counstatetry">State / Region</Label>
-                                <Input type="select" name="state">
-                                    <option>Africa</option>
-                                    <option>Asia</option>
-                                    <option>America</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                        </Row>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="phone"
+                            name="phoneNumber"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="phoneNumber"
+                            label="Phone Number"
+                            size="small"
+                            helperText="Phone Number"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="altphone"
+                            name="altPhoneNumber"
+                            variant="outlined"
+                            fullWidth
+                            id="altPhoneNumber"
+                            label="Alternative Phone Number"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="email"
+                            name="emaill"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            size="small"
+                        />
+                        </Grid>
                         
-                        <Row form>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="lga">Province/District/LGA </Label>
-                                <Input type="select" name="lga">
-                                    <option>Students</option>
-                                    <option>Business</option>
-                                    <option>Government</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                            <FormGroup>
-                                <Label for="landMark">Land Mark</Label>
-                                <Input type="text" name="landMark" id="landMark" placeholder="Land Mark" />
-                            </FormGroup>
-                            </Col>
-                            
-                        </Row>
-                </CardBody>
-            </Card>
-            </Col>
-        </Row>
-         {/* fourth  row form entry  for Relatives*/}
-         <Row>
-            <Col xl={12} lg={12} md={12}>
-                <Card>
-                    <CardHeader className="text-info">Patient Relative
-                        <Button color="primary" className=" float-right mr-1" >
-                        <FaPlusSquare/>Add Relative 
-                        </Button>
-                    </CardHeader>
-                    <CardBody>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="lname"
+                            size="small"
+                        />
+                        </Grid>
+                     
+                </Grid> 
+                <br/>  
+            <Card className={classes.cardBottom}>  
+            <CardContent>
+                <Title >Address</Title>   
+                
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                            country
+                        </InputLabel>
+                            <Select
+                            native
+                            value={state.age}
+                            onChange={handleChange('age')}
+                            labelWidth={labelWidth}
+                            inputProps={{
+                                name: 'country',
+                                id: 'outlined-age-native-simple',
+                            }}
+                            className={classes.Select}
+                            >
+                            <option value="" />
+                            <option value={10}>Ten</option>
+                            <option value={20}>Twenty</option>
+                            <option value={30}>Thirty</option>
+                            </Select>
+                        </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                                State
+                                </InputLabel>
+                                <Select
+                                native
+                                value={state.age}
+                                onChange={handleChange('age')}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'state',
+                                    id: 'outlined-age-native-simple',
+                                }}
+                                className={classes.Select}
+                                >
+                                <option value="" />
+                                <option value={10}>Ten</option>
+                                <option value={20}>Twenty</option>
+                                <option value={30}>Thirty</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                                    Province/District/LGA
+                                </InputLabel>
+                                <Select
+                                native
+                                value={state.age}
+                                onChange={handleChange('age')}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'Province/District/LGA',
+                                    id: 'outlined-age-native-simple',
+                                }}
+                                className={classes.Select}
+                                >
+                                <option value="" />
+                                <option value={10}>Ten</option>
+                                <option value={20}>Twenty</option>
+                                <option value={30}>Thirty</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            autoComplete="city"
+                            name="c"
+                            variant="outlined"
+                            fullWidth
+                            id="firstName"
+                            label="City"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            id="landMark"
+                            label="Land Mark"
+                            name="landMark"
+                            autoComplete="landMark"
+                            size="small"
+                        />
+                        </Grid>
                     
-                            <Row form>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="firstName">Fist Name</Label>
-                                    <Input type="text" name="firstName" id="firstName" placeholder="First Name" />
-                                </FormGroup>
-                                </Col>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="middleName">Middle Name</Label>
-                                    <Input type="text" name="middleName" id="middleName" placeholder="Middle Name" />
-                                </FormGroup>
-                                </Col>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="lastName">Last Name </Label>
-                                    <Input type="text" name="lastName" id="lastName" placeholder="Last Name" />
-                                </FormGroup>
-                                </Col>
-                            </Row>
-                            
-                            <Row form>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="phoneRelative">Phone No.</Label>
-                                    <Input type="text" name="phoneRelative" id="phoneRelative" placeholder="Relative Phone No." />
-                                </FormGroup>
-                                </Col>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="relativeEmail">Email Address</Label>
-                                    <Input type="text" name="relativeEmail" id="relativeEmail" placeholder="Relative Email Address" />
-                                </FormGroup>
-                                </Col>
-                                <Col md={4}>
-                                <FormGroup>
-                                    <Label for="relativeAddress">Physical Address</Label>
-                                    <Input type="text" name="relativeAddress" id="relativeAddress" placeholder="Relative Physical Address" />
-                                </FormGroup>  
-                                </Col>
-                            </Row>
-                            
-                            <Button color="success">Submit</Button> { ' ' } <Button link="dark">Cancel</Button>
+                 
+                </Grid>
+                
+            </CardContent>
+
+            </Card>
+        </CardContent>
         
-                            <FormFeedback></FormFeedback>        
-                    </CardBody>
-                </Card>
-                </Col>
-            </Row>
-    </Form>
+       </Card>
+       <Card className={classes.cardBottom}>  
+            <CardContent>
+                <Title >Relative Information</Title>   
+               
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            autoFocus
+                            size="small"
+                            helperText="First Name"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="mname"
+                            name="middleName"
+                            variant="outlined"
+                            fullWidth
+                            id="middleName"
+                            label="Middle Name"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                        <TextField
+                            autoComplete="lname"
+                            name="lasttName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            size="small"
+                        />
+                        </Grid>
+                        
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            size="small"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="lname"
+                            size="small"
+                        />
+                        </Grid>  
+                </Grid>
+                <br/>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        startIcon={<SaveIcon />}
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        className={classes.button}
+                        startIcon={<CancelIcon />}
+                    >
+                        Cancel
+                    </Button>
+               
+            </CardContent>
+       </Card>
+       </form>
+    
 </Page>
   );
-};
-
-export default FormPage;
+}
