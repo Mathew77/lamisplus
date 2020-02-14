@@ -44,7 +44,7 @@ const getBasename = () => {
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter basename={getBasename()}>
+      <BrowserRouter>
         <GAListener>
           <Switch>
           <Route  path="/signin" component={SignInSide} />
@@ -72,10 +72,10 @@ class App extends React.Component {
                 <AuthPage {...props} authState={STATE_SIGNUP} />
               )}
             />
-            
+
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                
+
                  {/* The new routes are here  */}
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/patient-registration" component={PateintRegistationPage} />
@@ -84,7 +84,7 @@ class App extends React.Component {
                 {/* Consultation Links */}
                 <Route exact path="/consultation" component={ConsultationPage} />
                 <Route exact path="/consultation-dashbaord" component={ConsultationDashboardPage} />
-                
+
                 <Route exact path="/laboratory" component={LaboratoryPage} />
                 <Route exact path="/view-result" component={ViewResult} />
                 <Route exact path="/test-order" component={TestOrder} />
@@ -92,7 +92,7 @@ class App extends React.Component {
                 <Route exact path="/test-result" component={TestResult} />
                 <Route exact path="/collect-sample" component={CollectSample} />
 
-                <Route exact path="/patients" component={PatientsPage} /> 
+                <Route exact path="/patients" component={PatientsPage} />
                 {/* Pharmacy Links */}
                 <Route exact path="/pharmacy" component={PharmacyPage} />
                 <Route exact path="/pending-prescription" component={PendingPrescription} />
@@ -104,7 +104,7 @@ class App extends React.Component {
                <Route exact path="/data-table2" component={DataTable2} />
               </React.Suspense>
             </MainLayout>
-            
+
             <Redirect to="/" />
           </Switch>
         </GAListener>
